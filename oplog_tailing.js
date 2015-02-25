@@ -178,7 +178,10 @@ _.extend(OplogHandle.prototype, {
     // should deliver them in order.
     if (messageTs < (self._sequenceSeen + 1)) {
       Meteor._debug("Got out-of-sequence message: " + message + " vs " + (self._sequenceSeen + 1));
-      throw new Error("Sequence received out of sequence");
+
+      // HACK(jeff, 2/24/2015): Temporarily disabled while we figure out why this is happening.
+      // throw new Error("Sequence received out of sequence");
+      return;
     }
 
     self._sequenceSeen = messageTs;
